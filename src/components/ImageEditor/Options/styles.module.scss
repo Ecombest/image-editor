@@ -1,0 +1,59 @@
+@import "../global.module.scss";
+
+.options {
+  display: flex;
+  justify-content: space-around;
+
+  .upload {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    border-right: 1px dashed gray;
+  }
+
+  .settings {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+
+    .properties {
+      width: 30%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .filters {
+      width: 30%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .croppers {
+      width: 30%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+
+      .icon {
+        width: 30px;
+      }
+
+      .label {
+        font-weight: 400;
+        font-size: 12px;
+      }
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}

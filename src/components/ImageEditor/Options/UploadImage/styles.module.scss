@@ -1,0 +1,23 @@
+@import "../../global.module.scss";
+
+.uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  color: gray;
+
+  .icon {
+    width: 30px;
+  }
+
+  .label {
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  &:hover {
+    color: $primary-color;
+  }
+}

@@ -1,0 +1,65 @@
+@import "../global.module.scss";
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  .confirm {
+    display: flex;
+    gap: 10px;
+
+    .edited,
+    .original {
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 400;
+      width: 70px;
+      text-align: center;
+      padding: 8px 0px;
+    }
+
+    .edited {
+      background-color: $primary-color;
+      color: rgb(255, 255, 255);
+      &:hover {
+        background-color: $secondary-color;
+      }
+    }
+
+    .original {
+      background-color: #ffffff;
+      color: $primary-color;
+      border: 1px solid $primary-color;
+      &:hover {
+        background-color: $tertiary-color;
+      }
+    }
+
+    .disable {
+      border-radius: 8px;
+      cursor: not-allowed;
+      font-weight: 400;
+      color: rgb(255, 255, 255);
+      background-color: #c9c9c9;
+      width: 70px;
+      text-align: center;
+      padding: 8px 0px;
+    }
+  }
+
+  .cancel {
+    border: 0.5px solid #737373;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 400;
+    color: #737373;
+    width: 70px;
+    text-align: center;
+    padding: 8px 0px;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+}
