@@ -1,3 +1,1 @@
-import ImageEditor from "./ImageEditor";
-
-export default ImageEditor;
+export { default as ImageEditor } from "./ImageEditor";

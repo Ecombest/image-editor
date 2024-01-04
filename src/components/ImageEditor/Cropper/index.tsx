@@ -1,16 +1,15 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./styles.module.scss";
-import { cropperProperties } from "@/states/cropper.state";
 import {
   drawCropper,
   getImageActualDimensions,
   updateCropperProperties,
 } from "@/utils/image.util";
-import { imageProperties } from "@/states/image.state";
 import {
   CROPPER_MIN_HEIGHT,
   CROPPER_MIN_WIDTH,
 } from "@/constants/cropper.constant";
+import { cropperProperties, imageProperties } from "..";
 
 interface CropperProps {}
 
@@ -29,6 +28,7 @@ export default function Cropper(props: CropperProps) {
     const { clientWidth = 0, clientHeight = 0 } = image ?? {};
     const { actualWidth, actualHeight } = getImageActualDimensions(image);
     updateCropperProperties(
+      cropperProperties,
       dx,
       dy,
       dw,

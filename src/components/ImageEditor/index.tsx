@@ -4,8 +4,6 @@ import { drawImage } from "@/utils/canvas.util";
 import Properties from "./Properties";
 import Actions from "./Actions";
 import Filters from "./Filters";
-import { cropperProperties } from "@/states/cropper.state";
-import { imageProperties } from "@/states/image.state";
 import Cropper from "./Cropper";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/solid";
 import UploadImage from "./Options/UploadImage";
@@ -19,6 +17,25 @@ import {
   CROPPER_MIN_WIDTH,
 } from "@/constants/cropper.constant";
 import { distanceBetweenTwoPoints } from "@/utils/event.util";
+
+export const cropperProperties = {
+  x: -100,
+  y: -100,
+  width: 0,
+  height: 0,
+  ratio: 0,
+  angle: 0,
+};
+
+export const imageProperties = {
+  x: 0,
+  y: 0,
+  scale: 1,
+  filter: "",
+  scaleX: 1,
+  scaleY: 1,
+  whRatio: 1,
+};
 
 interface ImageEditorProps {
   image?: File;
@@ -83,7 +100,7 @@ export default function ImageEditor(props: ImageEditorProps) {
     if (imageFile) {
       image.onload = () => {
         imageProperties.whRatio = image.naturalWidth / image.naturalHeight;
-        fitInCropper(image, cropper);
+        fitInCropper(image, cropper, cropperProperties);
         onResize();
       };
     } else {
@@ -148,6 +165,7 @@ export default function ImageEditor(props: ImageEditorProps) {
           imageRef.current
         );
         updateCropperProperties(
+          cropperProperties,
           dx,
           dy,
           dw,

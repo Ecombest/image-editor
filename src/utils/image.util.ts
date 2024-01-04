@@ -1,5 +1,3 @@
-import { cropperProperties } from "@/states/cropper.state";
-
 export const drawCropper = (
   cropper: HTMLDivElement | undefined | null,
   options: {
@@ -25,6 +23,7 @@ export const drawCropper = (
 };
 
 export const updateCropperProperties = (
+  cropperProperties: any,
   dx: number,
   dy: number,
   dw: number,
@@ -92,7 +91,8 @@ export const getImageActualDimensions = (image?: HTMLImageElement | null) => {
 
 export const fitInCropper = (
   image: HTMLImageElement | undefined | null,
-  cropper: any
+  cropper: any,
+  cropperProperties: any
 ) => {
   if (!image || !cropper) return;
 

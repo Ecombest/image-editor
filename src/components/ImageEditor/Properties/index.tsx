@@ -4,8 +4,6 @@ import {
   MagnifyingGlassMinusIcon,
   MagnifyingGlassPlusIcon,
 } from "@heroicons/react/24/solid";
-import { cropperProperties } from "@/states/cropper.state";
-import { imageProperties } from "@/states/image.state";
 import {
   CROPPER_MIN_HEIGHT,
   CROPPER_MIN_WIDTH,
@@ -16,6 +14,7 @@ import {
   updateCropperProperties,
 } from "@/utils/image.util";
 import { FlipIcon } from "@/constants/icon.constant";
+import { cropperProperties, imageProperties } from "..";
 
 interface PropertiesProps {
   image?: HTMLImageElement | undefined | null;
@@ -34,6 +33,7 @@ export default function Properties(props: PropertiesProps) {
     const { clientWidth = 0, clientHeight = 0 } = image ?? {};
     const { actualWidth, actualHeight } = getImageActualDimensions(image);
     updateCropperProperties(
+      cropperProperties,
       -dZoom / 2,
       -dZoom / cropperProperties.ratio / 2,
       dw,
