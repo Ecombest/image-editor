@@ -237,9 +237,11 @@ export default function ImageEditor(props: ImageEditorProps) {
     if (whRatio < image.naturalWidth / image.naturalHeight) {
       canvas.width = image.naturalWidth;
       canvas.height = image.naturalWidth / whRatio;
+      imageProperties.scale = container.clientWidth / image.naturalWidth;
     } else {
       canvas.height = image.naturalHeight;
       canvas.width = image.naturalHeight * whRatio;
+      imageProperties.scale = container.clientHeight / image.naturalHeight;
     }
     drawImage(canvas, image, {
       x: (canvas.width - image.naturalWidth) / 2,
