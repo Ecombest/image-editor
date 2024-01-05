@@ -6,16 +6,17 @@ export const drawCropper = (
     width: number;
     height: number;
     angle: number;
+    highlightId: string;
   }
 ) => {
   if (!cropper) return;
-  const { x, y, width, height, angle } = options;
+  const { x, y, width, height, angle, highlightId } = options;
   cropper.style.width = `${width}px`;
   cropper.style.height = `${height}px`;
   cropper.style.left = `${x}px`;
   cropper.style.top = `${y}px`;
 
-  const highlight = document.getElementById("highlight");
+  const highlight = document.getElementById(highlightId);
   if (highlight) {
     highlight.style.left = `${-x}px`;
     highlight.style.top = `${-y}px`;

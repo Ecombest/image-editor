@@ -18,25 +18,6 @@ import {
 } from "@/constants/cropper.constant";
 import { distanceBetweenTwoPoints } from "@/utils/event.util";
 
-export const cropperProperties = {
-  x: -100,
-  y: -100,
-  width: 0,
-  height: 0,
-  ratio: 0,
-  angle: 0,
-};
-
-export const imageProperties = {
-  x: 0,
-  y: 0,
-  scale: 1,
-  filter: "",
-  scaleX: 1,
-  scaleY: 1,
-  whRatio: 1,
-};
-
 interface ImageEditorProps {
   image?: File;
   cropper?: { width: number; height: number; [prop: string]: any };
@@ -72,6 +53,24 @@ export default function ImageEditor(props: ImageEditorProps) {
   const imageRef = useRef<HTMLImageElement>(null);
   const uploaderRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File>();
+  const [cropperProperties, setCropper] = useState({
+    x: -100,
+    y: -100,
+    width: 0,
+    height: 0,
+    ratio: 0,
+    angle: 0,
+    highlightId: `highlight-${Math.random()}`,
+  });
+  const [imageProperties, setImage] = useState({
+    x: 0,
+    y: 0,
+    scale: 1,
+    filter: "",
+    scaleX: 1,
+    scaleY: 1,
+    whRatio: 1,
+  });
 
   // init image
   useEffect(() => {
@@ -317,7 +316,10 @@ export default function ImageEditor(props: ImageEditorProps) {
             }}
           />
         </div>
-        <Cropper />
+        <Cropper
+          cropperProperties={cropperProperties}
+          imageProperties={imageProperties}
+        />
       </div>
       <div className={styles["settings"]}>
         {filters?.length > 0 && (
@@ -329,6 +331,8 @@ export default function ImageEditor(props: ImageEditorProps) {
               imageFile={imageFile}
               image={imageRef.current}
               filters={filters}
+              imageProperties={imageProperties}
+              cropperProperties={cropperProperties}
             />
           </div>
         )}
@@ -336,7 +340,11 @@ export default function ImageEditor(props: ImageEditorProps) {
           className={styles["properties"]}
           style={{ display: imageFile ? "" : "none" }}
         >
-          <Properties image={imageRef.current} />
+          <Properties
+            image={imageRef.current}
+            cropperProperties={cropperProperties}
+            imageProperties={imageProperties}
+          />
         </div>
         <div
           className={styles["help-text"]}

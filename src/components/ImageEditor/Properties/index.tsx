@@ -14,16 +14,17 @@ import {
   updateCropperProperties,
 } from "@/utils/image.util";
 import { FlipIcon } from "@/constants/icon.constant";
-import { cropperProperties, imageProperties } from "..";
 
 interface PropertiesProps {
   image?: HTMLImageElement | undefined | null;
+  cropperProperties: any;
+  imageProperties: any;
 }
 
 let zoomInterval: any = null;
 
 export default function Properties(props: PropertiesProps) {
-  const { image } = props;
+  const { image, cropperProperties, imageProperties } = props;
   const zoomInRef = useRef<HTMLDivElement>(null);
   const zoomOutRef = useRef<HTMLDivElement>(null);
 
@@ -52,7 +53,7 @@ export default function Properties(props: PropertiesProps) {
     if (!image) return;
     imageProperties.scaleX = -imageProperties.scaleX;
     image.style.transform = `scale(${imageProperties.scaleX}, ${imageProperties.scaleY})`;
-    const highlight = document.getElementById("highlight");
+    const highlight = document.getElementById(cropperProperties.highlightId);
     if (highlight) {
       highlight.style.transform = `scale(${imageProperties.scaleX}, ${imageProperties.scaleY})`;
     }
@@ -62,7 +63,7 @@ export default function Properties(props: PropertiesProps) {
     if (!image) return;
     imageProperties.scaleY = -imageProperties.scaleY;
     image.style.transform = `scale(${imageProperties.scaleX}, ${imageProperties.scaleY})`;
-    const highlight = document.getElementById("highlight");
+    const highlight = document.getElementById(cropperProperties.highlightId);
     if (highlight) {
       highlight.style.transform = `scale(${imageProperties.scaleX}, ${imageProperties.scaleY})`;
     }

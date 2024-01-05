@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import baseStyles from "../global.module.scss";
-import { imageProperties } from "..";
 
 interface FiltersProps {
   imageFile?: File | Blob;
   image?: HTMLImageElement | null;
   filters?: { label: string; filter: string; selected?: boolean }[];
+  imageProperties: any;
+  cropperProperties: any;
 }
 
 export default function Filters(props: FiltersProps) {
-  const { image, imageFile, filters } = props;
+  const { image, imageFile, filters, imageProperties, cropperProperties } =
+    props;
   const [imageSrc, setImageSrc] = useState<string>();
   const [currentFilter, setCurrentFilter] = useState("");
 
@@ -32,7 +34,7 @@ export default function Filters(props: FiltersProps) {
     setCurrentFilter(filter);
     if (!image) return;
     image.style.filter = filter;
-    const highlight = document.getElementById("highlight");
+    const highlight = document.getElementById(cropperProperties.highlightId);
     if (!highlight) return;
     highlight.style.filter = filter;
   };

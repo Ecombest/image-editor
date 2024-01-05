@@ -9,12 +9,14 @@ import {
   CROPPER_MIN_HEIGHT,
   CROPPER_MIN_WIDTH,
 } from "@/constants/cropper.constant";
-import { cropperProperties, imageProperties } from "..";
 
-interface CropperProps {}
+interface CropperProps {
+  cropperProperties: any;
+  imageProperties: any;
+}
 
 export default function Cropper(props: CropperProps) {
-  const {} = props;
+  const { cropperProperties, imageProperties } = props;
   const cropperRef = useRef<HTMLDivElement>(null);
   const highlightRef = useRef<HTMLImageElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -483,7 +485,7 @@ export default function Cropper(props: CropperProps) {
       <div className={styles["highlight-container"]}>
         <div
           ref={highlightRef}
-          id="highlight"
+          id={cropperProperties.highlightId}
           className={styles["highlight"]}
           style={{
             filter: imageProperties.filter,
