@@ -11,12 +11,13 @@ import {
 } from "@/constants/cropper.constant";
 
 interface CropperProps {
+  imageFile?: File | Blob;
   cropperProperties: any;
   imageProperties: any;
 }
 
 export default function Cropper(props: CropperProps) {
-  const { cropperProperties, imageProperties } = props;
+  const { imageFile, cropperProperties, imageProperties } = props;
   const cropperRef = useRef<HTMLDivElement>(null);
   const highlightRef = useRef<HTMLImageElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -55,14 +56,6 @@ export default function Cropper(props: CropperProps) {
       drawCropper(cropper, cropperProperties);
     };
 
-    const onImageUploaded = (payload: any) => {
-      const { imageFile } = payload.detail ?? {};
-      if (imageRef.current) {
-        imageRef.current.src = imageFile ? URL.createObjectURL(imageFile) : "";
-      }
-      drawCropper(cropper, cropperProperties);
-    };
-
     const onResizeCropper = (payload: any) => {
       const { width, height } = payload.detail ?? {};
       if (width && height) {
@@ -73,11 +66,9 @@ export default function Cropper(props: CropperProps) {
     };
 
     window.addEventListener("update-cropper", onUpdateCropper);
-    window.addEventListener("image-uploaded", onImageUploaded);
     window.addEventListener("resize-cropper", onResizeCropper);
     return () => {
       window.removeEventListener("update-cropper", onUpdateCropper);
-      window.removeEventListener("image-uploaded", onImageUploaded);
       window.removeEventListener("resize-cropper", onResizeCropper);
     };
   }, []);
@@ -492,7 +483,10 @@ export default function Cropper(props: CropperProps) {
             transform: `scale(${imageProperties.scaleX}, ${imageProperties.scaleY})`,
           }}
         >
-          <img ref={imageRef} />
+          <img
+            ref={imageRef}
+            src={imageFile && URL.createObjectURL(imageFile)}
+          />
         </div>
       </div>
       <div className={styles["corners"]}>

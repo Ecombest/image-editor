@@ -205,13 +205,6 @@ export default function ImageEditor(props: ImageEditorProps) {
 
   const onChangeImage = (imageFile?: File) => {
     setImageFile(imageFile);
-    window.dispatchEvent(
-      new CustomEvent("image-uploaded", {
-        detail: {
-          imageFile,
-        },
-      })
-    );
   };
 
   const applyImageEdit = (isOriginal?: boolean) => {
@@ -317,6 +310,7 @@ export default function ImageEditor(props: ImageEditorProps) {
           />
         </div>
         <Cropper
+          imageFile={imageFile}
           cropperProperties={cropperProperties}
           imageProperties={imageProperties}
         />
@@ -354,7 +348,7 @@ export default function ImageEditor(props: ImageEditorProps) {
         </div>
       </div>
       <div className={styles["actions"]}>
-        <UploadImage onUpload={onChangeImage} />
+        <UploadImage imageFile={imageFile} onUpload={onChangeImage} />
         <div className={styles["next-step"]}>
           <Actions
             confirmButton={{
