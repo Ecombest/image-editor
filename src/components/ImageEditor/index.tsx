@@ -8,6 +8,7 @@ import Cropper from "./Cropper";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/solid";
 import UploadImage from "./Options/UploadImage";
 import {
+  applyFilter,
   fitInCropper,
   getImageActualDimensions,
   updateCropperProperties,
@@ -17,6 +18,8 @@ import {
   CROPPER_MIN_WIDTH,
 } from "@/constants/cropper.constant";
 import { distanceBetweenTwoPoints } from "@/utils/event.util";
+
+declare var MarvinImage: any;
 
 interface ImageEditorProps {
   image?: File;
@@ -71,6 +74,16 @@ export default function ImageEditor(props: ImageEditorProps) {
     scaleY: 1,
     whRatio: 1,
   });
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.marvinj.org/releases/marvinj-1.0.min.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   // init image
   useEffect(() => {
@@ -238,7 +251,7 @@ export default function ImageEditor(props: ImageEditorProps) {
     drawImage(canvas, image, {
       x: (canvas.width - image.naturalWidth) / 2,
       y: (canvas.height - image.naturalHeight) / 2,
-      filter: imageProperties.filter,
+      filter: "",
       scaleX: imageProperties.scaleX,
       scaleY: imageProperties.scaleY,
     });
@@ -259,16 +272,21 @@ export default function ImageEditor(props: ImageEditorProps) {
       croppedCanvas.height
     );
 
-    croppedCanvas.toBlob((blob) => {
-      if (blob) {
-        confirmButton?.onClick?.({
-          original: imageFile,
-          edited: blob,
-          cropper: cropperProperties,
-        });
-        canvas.remove();
-        croppedCanvas.remove();
-      }
+    const croppedImage = new MarvinImage();
+    croppedImage.load(croppedCanvas.toDataURL(), () => {
+      const filteredImage = applyFilter(croppedImage, imageProperties.filter);
+      filteredImage.update();
+      filteredImage.canvas.toBlob((blob: any) => {
+        if (blob) {
+          confirmButton?.onClick?.({
+            original: imageFile,
+            edited: blob,
+            cropper: cropperProperties,
+          });
+          canvas.remove();
+          croppedCanvas.remove();
+        }
+      });
     });
   };
 

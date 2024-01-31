@@ -1,3 +1,7 @@
+import { IMAGE_FILTERS } from "@/constants/image.contant";
+
+declare var Marvin: any;
+
 export const drawCropper = (
   cropper: HTMLDivElement | undefined | null,
   options: {
@@ -111,4 +115,19 @@ export const fitInCropper = (
   cropperProperties.x = (image.clientWidth - width) / 2;
   cropperProperties.y = (image.clientHeight - height) / 2;
   cropperProperties.ratio = cropperRatio;
+};
+
+export const applyFilter = (image: any, filter: string) => {
+  const filters = filter.split(" ");
+  for (filter of filters) {
+    switch (filter.split("(")?.[0]) {
+      case IMAGE_FILTERS.grayscale:
+        Marvin.grayScale(image, image);
+        continue;
+      default:
+        continue;
+    }
+  }
+
+  return image;
 };
