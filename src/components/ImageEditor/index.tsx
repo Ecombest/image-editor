@@ -77,7 +77,8 @@ export default function ImageEditor(props: ImageEditorProps) {
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "https://www.marvinj.org/releases/marvinj-1.0.min.js";
+    script.src =
+      "https://ecb-personalize-storage.sgp1.digitaloceanspaces.com/ecb-static/libs/bestbuildyou/marvinj-1.0.min.js";
     script.async = true;
     document.body.appendChild(script);
     return () => {
