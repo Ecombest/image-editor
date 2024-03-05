@@ -9,6 +9,7 @@ import { DocumentArrowUpIcon } from "@heroicons/react/24/solid";
 import UploadImage from "./Options/UploadImage";
 import {
   applyFilter,
+  processImageFile,
   fitInCropper,
   getImageActualDimensions,
   updateCropperProperties,
@@ -218,7 +219,9 @@ export default function ImageEditor(props: ImageEditorProps) {
   }, [image]);
 
   const onChangeImage = (imageFile?: File) => {
-    setImageFile(imageFile);
+    processImageFile(imageFile).then((processedImageFile) => {
+      setImageFile(processedImageFile as File);
+    });
   };
 
   const applyImageEdit = (isOriginal?: boolean) => {

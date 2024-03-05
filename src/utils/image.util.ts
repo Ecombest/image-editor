@@ -1,4 +1,5 @@
 import { IMAGE_FILTERS } from "@/constants/image.contant";
+import heic2any from "heic2any";
 
 declare var Marvin: any;
 
@@ -130,4 +131,38 @@ export const applyFilter = (image: any, filter: string) => {
   }
 
   return image;
+};
+
+export const processImageFile = async (
+  imageFile?: File
+): Promise<Blob | Blob[] | undefined> => {
+  if (imageFile?.type === "image/heic") {
+    const blob = await fileToBlob(imageFile, "image/png");
+    return new Promise((resolve) => {
+      heic2any({
+        blob,
+        toType: "image/png",
+        quality: 0.1,
+        gifInterval: 0.2,
+      } as any).then((buffer) => {
+        resolve(buffer);
+      });
+    });
+  } else {
+    return imageFile;
+  }
+};
+
+export const fileToBlob = async (file: File, type: string) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.onload = function () {
+      if (fileReader.result) {
+        resolve(new Blob([fileReader.result], { type }));
+      } else {
+        reject(undefined);
+      }
+    };
+    fileReader.readAsArrayBuffer(file);
+  });
 };
