@@ -19,6 +19,7 @@ import {
   CROPPER_MIN_WIDTH,
 } from "@/constants/cropper.constant";
 import { distanceBetweenTwoPoints } from "@/utils/event.util";
+import { LoadingIcon } from "@/constants/icon.constant";
 
 declare var MarvinImage: any;
 
@@ -57,6 +58,7 @@ export default function ImageEditor(props: ImageEditorProps) {
   const imageRef = useRef<HTMLImageElement>(null);
   const uploaderRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File>();
+  const [isProcessing, setIsProcessing] = useState(false);
   const [cropperProperties, setCropper] = useState({
     x: -100,
     y: -100,
@@ -116,6 +118,7 @@ export default function ImageEditor(props: ImageEditorProps) {
         imageProperties.whRatio = image.naturalWidth / image.naturalHeight;
         fitInCropper(image, cropper, cropperProperties);
         onResize();
+        setIsProcessing(false);
       };
     } else {
       cropperProperties.width = 0;
@@ -219,8 +222,17 @@ export default function ImageEditor(props: ImageEditorProps) {
   }, [image]);
 
   const onChangeImage = (imageFile?: File) => {
-    processImageFile(imageFile).then((processedImageFile) => {
-      setImageFile(processedImageFile as File);
+    if (imageFile) {
+      setIsProcessing(true);
+    }
+    setTimeout(() => {
+      processImageFile(imageFile)
+        .then((processedImageFile) => {
+          setImageFile(processedImageFile as File);
+        })
+        .catch(() => {
+          setIsProcessing(false);
+        });
     });
   };
 
@@ -287,6 +299,7 @@ export default function ImageEditor(props: ImageEditorProps) {
             edited: blob,
             cropper: cropperProperties,
           });
+          setIsProcessing(false);
           canvas.remove();
           croppedCanvas.remove();
         }
@@ -311,9 +324,27 @@ export default function ImageEditor(props: ImageEditorProps) {
             transform: `scale(${imageProperties.scaleX}, ${imageProperties.scaleY})`,
           }}
         />
+
+        {/* Cropper */}
+        <Cropper
+          imageFile={imageFile}
+          cropperProperties={cropperProperties}
+          imageProperties={imageProperties}
+        />
+
+        {/* Loading */}
+        <div
+          className={styles["loading"]}
+          style={{ display: isProcessing ? "" : "none" }}
+        >
+          <div>Processing</div>
+          <img src={LoadingIcon} height={40} />
+        </div>
+
+        {/* Upload */}
         <div
           className={styles["no-image"]}
-          style={{ display: imageFile ? "none" : "" }}
+          style={{ display: imageFile || isProcessing ? "none" : "" }}
           onClick={() => {
             uploaderRef?.current?.click();
           }}
@@ -331,11 +362,6 @@ export default function ImageEditor(props: ImageEditorProps) {
             }}
           />
         </div>
-        <Cropper
-          imageFile={imageFile}
-          cropperProperties={cropperProperties}
-          imageProperties={imageProperties}
-        />
       </div>
       <div className={styles["settings"]}>
         {filters?.length > 0 && (
@@ -375,7 +401,15 @@ export default function ImageEditor(props: ImageEditorProps) {
           <Actions
             confirmButton={{
               label: confirmButton?.label,
-              onClick: imageFile ? applyImageEdit : undefined,
+              onClick:
+                imageFile && !isProcessing
+                  ? (isOriginal?: boolean) => {
+                      setIsProcessing(true);
+                      setTimeout(() => {
+                        applyImageEdit(isOriginal);
+                      });
+                    }
+                  : undefined,
             }}
             cancelButton={cancelButton}
           />
