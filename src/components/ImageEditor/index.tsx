@@ -77,6 +77,7 @@ export default function ImageEditor(props: ImageEditorProps) {
     scaleY: 1,
     whRatio: 1,
   });
+  let processingTimeOut: any = null;
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -91,6 +92,7 @@ export default function ImageEditor(props: ImageEditorProps) {
 
   // init image
   useEffect(() => {
+    clearTimeout(processingTimeOut);
     const container = containerRef.current;
     const image = imageRef.current;
     if (!container || !image) return;
@@ -229,6 +231,9 @@ export default function ImageEditor(props: ImageEditorProps) {
       processImageFile(imageFile)
         .then((processedImageFile) => {
           setImageFile(processedImageFile as File);
+          processingTimeOut = setTimeout(() => {
+            setIsProcessing(false);
+          }, 1000);
         })
         .catch(() => {
           setIsProcessing(false);

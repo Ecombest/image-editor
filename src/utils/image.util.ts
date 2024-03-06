@@ -137,10 +137,9 @@ export const processImageFile = async (
   imageFile?: File
 ): Promise<Blob | Blob[] | undefined> => {
   if (imageFile?.type === "image/heic") {
-    const imageBlob = await fileToBlob(imageFile, "image/png");
     return new Promise((resolve) => {
       heic2any({
-        blob: imageBlob,
+        blob: imageFile,
         toType: "image/png",
       }).then((blob) => {
         resolve(blob);
@@ -149,18 +148,4 @@ export const processImageFile = async (
   } else {
     return imageFile;
   }
-};
-
-export const fileToBlob = async (file: File, type: string): Promise<Blob> => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.onload = function () {
-      if (fileReader.result) {
-        resolve(new Blob([fileReader.result], { type }));
-      } else {
-        reject(undefined);
-      }
-    };
-    fileReader.readAsArrayBuffer(file);
-  });
 };
