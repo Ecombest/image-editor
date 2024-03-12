@@ -116,13 +116,19 @@ export default function ImageEditor(props: ImageEditorProps) {
     };
 
     image.src = imageFile ? URL.createObjectURL(imageFile) : "";
+    image.onload = () => {
+      imageProperties.whRatio = image.naturalWidth / image.naturalHeight;
+      fitInCropper(image, cropper, cropperProperties);
+      onResize();
+      setIsProcessing(false);
+    };
+    image.onerror = () => {
+      setImageFile(undefined);
+      setIsFailed(true);
+      setIsProcessing(false);
+    };
+
     if (imageFile) {
-      image.onload = () => {
-        imageProperties.whRatio = image.naturalWidth / image.naturalHeight;
-        fitInCropper(image, cropper, cropperProperties);
-        onResize();
-        setIsProcessing(false);
-      };
     } else {
       cropperProperties.width = 0;
       cropperProperties.height = 0;
