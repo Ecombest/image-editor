@@ -137,13 +137,17 @@ export const processImageFile = async (
   imageFile?: File
 ): Promise<Blob | Blob[] | undefined> => {
   if (imageFile?.type === "image/heic") {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       heic2any({
         blob: imageFile,
         toType: "image/png",
-      }).then((blob) => {
-        resolve(blob);
-      });
+      })
+        .then((blob) => {
+          resolve(blob);
+        })
+        .catch((error) => {
+          reject(undefined);
+        });
     });
   } else {
     return imageFile;

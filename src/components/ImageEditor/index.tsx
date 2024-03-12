@@ -19,7 +19,7 @@ import {
   CROPPER_MIN_WIDTH,
 } from "@/constants/cropper.constant";
 import { distanceBetweenTwoPoints } from "@/utils/event.util";
-import { LoadingIcon } from "@/constants/icon.constant";
+import { LoadImageFailedIcon, LoadingIcon } from "@/constants/icon.constant";
 
 declare var MarvinImage: any;
 
@@ -59,6 +59,7 @@ export default function ImageEditor(props: ImageEditorProps) {
   const uploaderRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File>();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
   const [cropperProperties, setCropper] = useState({
     x: -100,
     y: -100,
@@ -231,11 +232,14 @@ export default function ImageEditor(props: ImageEditorProps) {
       processImageFile(imageFile)
         .then((processedImageFile) => {
           setImageFile(processedImageFile as File);
+          setIsFailed(false);
           processingTimeOut = setTimeout(() => {
             setIsProcessing(false);
           }, 1000);
         })
         .catch(() => {
+          setImageFile(undefined);
+          setIsFailed(true);
           setIsProcessing(false);
         });
     });
@@ -349,7 +353,9 @@ export default function ImageEditor(props: ImageEditorProps) {
         {/* Upload */}
         <div
           className={styles["no-image"]}
-          style={{ display: imageFile || isProcessing ? "none" : "" }}
+          style={{
+            display: imageFile || isProcessing || isFailed ? "none" : "",
+          }}
           onClick={() => {
             uploaderRef?.current?.click();
           }}
@@ -366,6 +372,20 @@ export default function ImageEditor(props: ImageEditorProps) {
               event.target.value = "";
             }}
           />
+        </div>
+
+        {/* Failed */}
+        <div
+          className={styles["no-image"]}
+          style={{
+            display: isFailed ? "" : "none",
+          }}
+          onClick={() => {
+            uploaderRef?.current?.click();
+          }}
+        >
+          <img src={LoadImageFailedIcon} height={50} />
+          Load image failed
         </div>
       </div>
       <div className={styles["settings"]}>
