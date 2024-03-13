@@ -115,21 +115,26 @@ export default function ImageEditor(props: ImageEditorProps) {
       );
     };
 
-    image.src = imageFile ? URL.createObjectURL(imageFile) : "";
-    image.onload = () => {
+    const onLoad = () => {
       imageProperties.whRatio = image.naturalWidth / image.naturalHeight;
       fitInCropper(image, cropper, cropperProperties);
       onResize();
       setIsProcessing(false);
     };
-    image.onerror = () => {
+
+    const onError = () => {
       setImageFile(undefined);
       setIsFailed(true);
       setIsProcessing(false);
     };
 
+    image.onload = onLoad;
+    image.onerror = onError;
+
     if (imageFile) {
+      image.src = URL.createObjectURL(imageFile);
     } else {
+      image.removeAttribute("src");
       cropperProperties.width = 0;
       cropperProperties.height = 0;
       cropperProperties.x = -100;
@@ -233,6 +238,7 @@ export default function ImageEditor(props: ImageEditorProps) {
   const onChangeImage = (imageFile?: File) => {
     if (imageFile) {
       setIsProcessing(true);
+      setIsFailed(false);
     }
     setTimeout(() => {
       processImageFile(imageFile)
