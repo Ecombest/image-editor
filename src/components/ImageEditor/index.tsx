@@ -20,6 +20,10 @@ import {
 } from "@/constants/cropper.constant";
 import { distanceBetweenTwoPoints } from "@/utils/event.util";
 import { LoadImageFailedIcon, LoadingIcon } from "@/constants/icon.constant";
+import {
+  ERROR_MESSAGES,
+  SUPPORTED_IMAGE_TYPES,
+} from "@/constants/image.contant";
 
 declare var MarvinImage: any;
 
@@ -59,7 +63,7 @@ export default function ImageEditor(props: ImageEditorProps) {
   const uploaderRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File>();
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isFailed, setIsFailed] = useState(false);
+  const [error, setError] = useState<string>();
   const [cropperProperties, setCropper] = useState({
     x: -100,
     y: -100,
@@ -124,7 +128,7 @@ export default function ImageEditor(props: ImageEditorProps) {
 
     const onError = () => {
       setImageFile(undefined);
-      setIsFailed(true);
+      setError(ERROR_MESSAGES.failedToLoadImage);
       setIsProcessing(false);
     };
 
@@ -237,21 +241,26 @@ export default function ImageEditor(props: ImageEditorProps) {
 
   const onChangeImage = (imageFile?: File) => {
     if (imageFile) {
+      if (!SUPPORTED_IMAGE_TYPES.includes(imageFile.type)) {
+        setError(ERROR_MESSAGES.unsupportedImageType);
+        setImageFile(undefined);
+        return;
+      }
+      setError(undefined);
       setIsProcessing(true);
-      setIsFailed(false);
     }
     setTimeout(() => {
       processImageFile(imageFile)
         .then((processedImageFile) => {
           setImageFile(processedImageFile as File);
-          setIsFailed(false);
+          setError(undefined);
           processingTimeOut = setTimeout(() => {
             setIsProcessing(false);
           }, 1000);
         })
         .catch(() => {
           setImageFile(undefined);
-          setIsFailed(true);
+          setError(ERROR_MESSAGES.failedToLoadImage);
           setIsProcessing(false);
         });
     });
@@ -366,7 +375,7 @@ export default function ImageEditor(props: ImageEditorProps) {
         <div
           className={styles["no-image"]}
           style={{
-            display: imageFile || isProcessing || isFailed ? "none" : "",
+            display: imageFile || isProcessing || error ? "none" : "",
           }}
           onClick={() => {
             uploaderRef?.current?.click();
@@ -390,14 +399,14 @@ export default function ImageEditor(props: ImageEditorProps) {
         <div
           className={styles["no-image"]}
           style={{
-            display: isFailed ? "" : "none",
+            display: error ? "" : "none",
           }}
           onClick={() => {
             uploaderRef?.current?.click();
           }}
         >
           <img src={LoadImageFailedIcon} height={50} />
-          Load image failed
+          {error}
         </div>
       </div>
       <div className={styles["settings"]}>
