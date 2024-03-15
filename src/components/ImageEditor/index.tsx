@@ -20,10 +20,7 @@ import {
 } from "@/constants/cropper.constant";
 import { distanceBetweenTwoPoints } from "@/utils/event.util";
 import { LoadImageFailedIcon, LoadingIcon } from "@/constants/icon.constant";
-import {
-  ERROR_MESSAGES,
-  SUPPORTED_IMAGE_TYPES,
-} from "@/constants/image.contant";
+import { ERROR_MESSAGES } from "@/constants/image.contant";
 
 declare var MarvinImage: any;
 
@@ -35,6 +32,7 @@ interface ImageEditorProps {
     height: number | string;
   };
   filters?: { label: string; filter: string; selected?: boolean }[];
+  accept?: ImageMimeType[];
   confirmButton?: {
     label?: string;
     onClick?: (images: {
@@ -53,8 +51,9 @@ export default function ImageEditor(props: ImageEditorProps) {
   const {
     image,
     cropper = { width: 400, height: 400 },
-    filters = [],
     container = { width: "100%", height: "50vh" },
+    filters = [],
+    accept,
     confirmButton,
     cancelButton,
   } = props;
@@ -241,7 +240,7 @@ export default function ImageEditor(props: ImageEditorProps) {
 
   const onChangeImage = (imageFile?: File) => {
     if (imageFile) {
-      if (!SUPPORTED_IMAGE_TYPES.includes(imageFile.type)) {
+      if (accept && !accept.includes(imageFile.type as ImageMimeType)) {
         setError(ERROR_MESSAGES.unsupportedImageType);
         setImageFile(undefined);
         return;
