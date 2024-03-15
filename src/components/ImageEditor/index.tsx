@@ -24,6 +24,16 @@ import { ERROR_MESSAGES } from "@/constants/image.contant";
 
 declare var MarvinImage: any;
 
+type ImageMimeType =
+  | "image/apng"
+  | "image/avif"
+  | "image/gif"
+  | "image/heic"
+  | "image/jpeg"
+  | "image/png"
+  | "image/svg+xml"
+  | "image/webp";
+
 interface ImageEditorProps {
   image?: File;
   cropper?: { width: number; height: number; [prop: string]: any };
