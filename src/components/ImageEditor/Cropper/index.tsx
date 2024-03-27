@@ -92,7 +92,7 @@ export default function Cropper(props: CropperProps) {
       event.preventDefault();
       if (resizable) {
         const dx = event.clientX - startPosition.x;
-        const dy = dx / cropperProperties.ratio;
+        const dy = event.clientY - startPosition.y;
         startPosition.x = event.clientX;
         startPosition.y = event.clientY;
         updateCropper(dx, dy, -dx, -dy);
@@ -122,7 +122,7 @@ export default function Cropper(props: CropperProps) {
       if (touches.length == 1) {
         const touch = touches[0];
         const dx = touch.clientX - startPosition.x;
-        const dy = dx / cropperProperties.ratio;
+        const dy = touch.clientY - startPosition.y;
         startPosition.x = touch.clientX;
         startPosition.y = touch.clientY;
         updateCropper(dx, dy, -dx, -dy);
@@ -166,7 +166,7 @@ export default function Cropper(props: CropperProps) {
       event.preventDefault();
       if (resizable) {
         const dx = event.clientX - startPosition.x;
-        const dy = dx / cropperProperties.ratio;
+        const dy = -event.clientY + startPosition.y;
         startPosition.x = event.clientX;
         startPosition.y = event.clientY;
         updateCropper(0, -dy, dx, dy);
@@ -196,7 +196,7 @@ export default function Cropper(props: CropperProps) {
       if (touches.length == 1) {
         const touch = touches[0];
         const dx = touch.clientX - startPosition.x;
-        const dy = dx / cropperProperties.ratio;
+        const dy = -touch.clientY + startPosition.y;
         startPosition.x = touch.clientX;
         startPosition.y = touch.clientY;
         updateCropper(0, -dy, dx, dy);
@@ -240,7 +240,7 @@ export default function Cropper(props: CropperProps) {
       event.preventDefault();
       if (resizable) {
         const dx = event.clientX - startPosition.x;
-        const dy = dx / cropperProperties.ratio;
+        const dy = -event.clientY + startPosition.y;
         startPosition.x = event.clientX;
         startPosition.y = event.clientY;
         updateCropper(dx, 0, -dx, -dy);
@@ -270,7 +270,7 @@ export default function Cropper(props: CropperProps) {
       if (touches.length == 1) {
         const touch = touches[0];
         const dx = touch.clientX - startPosition.x;
-        const dy = dx / cropperProperties.ratio;
+        const dy = -touch.clientY + startPosition.y;
         startPosition.x = touch.clientX;
         startPosition.y = touch.clientY;
         updateCropper(dx, 0, -dx, -dy);
@@ -314,7 +314,7 @@ export default function Cropper(props: CropperProps) {
       event.preventDefault();
       if (resizable) {
         const dx = event.clientX - startPosition.x;
-        const dy = dx / cropperProperties.ratio;
+        const dy = event.clientY - startPosition.y;
         startPosition.x = event.clientX;
         startPosition.y = event.clientY;
         updateCropper(0, 0, dx, dy);
@@ -344,7 +344,7 @@ export default function Cropper(props: CropperProps) {
       if (touches.length == 1) {
         const touch = touches[0];
         const dx = touch.clientX - startPosition.x;
-        const dy = dx / cropperProperties.ratio;
+        const dy = touch.clientY - startPosition.y;
         startPosition.x = touch.clientX;
         startPosition.y = touch.clientY;
         updateCropper(0, 0, dx, dy);

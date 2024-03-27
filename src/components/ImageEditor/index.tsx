@@ -173,13 +173,15 @@ export default function ImageEditor(props: ImageEditorProps) {
     const container = containerRef.current;
     if (!imageFile || !container) return;
 
-    let startDistance = 0;
+    let startXDistance = 0;
+    let startYDistance = 0;
 
     const onTouchStart = (event: TouchEvent) => {
       event.preventDefault();
       const touches = event?.touches;
       if (touches?.length == 2) {
-        startDistance = distanceBetweenTwoPoints(touches[0], touches[1]);
+        startXDistance = Math.abs(touches[0].clientX - touches[1].clientX);
+        startYDistance = Math.abs(touches[0].clientY - touches[1].clientY);
       }
     };
 
@@ -187,8 +189,10 @@ export default function ImageEditor(props: ImageEditorProps) {
       event.preventDefault();
       const touches = event?.touches;
       if (touches?.length == 2) {
-        const distance = distanceBetweenTwoPoints(touches[0], touches[1]);
-        const dDistance = distance - startDistance;
+        const xDistance = Math.abs(touches[0].clientX - touches[1].clientX);
+        const yDistance = Math.abs(touches[0].clientY - touches[1].clientY);
+        const dXDistance = xDistance - startXDistance;
+        const dYDistance = yDistance - startYDistance;
 
         const rect = container.getBoundingClientRect();
         const x =
@@ -199,8 +203,8 @@ export default function ImageEditor(props: ImageEditorProps) {
           (touches[0].clientY + touches[1].clientY) / 2 -
           cropperProperties.height / 2 -
           rect.top;
-        const dw = dDistance;
-        const dh = dDistance / cropperProperties.ratio;
+        const dw = dXDistance;
+        const dh = dYDistance;
         const dx = x - cropperProperties.x;
         const dy = y - cropperProperties.y;
 
@@ -222,7 +226,8 @@ export default function ImageEditor(props: ImageEditorProps) {
           actualHeight
         );
         window.dispatchEvent(new CustomEvent("update-cropper"));
-        startDistance = distance;
+        startXDistance = xDistance;
+        startYDistance = yDistance;
       }
     };
 
