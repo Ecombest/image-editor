@@ -1,5 +1,5 @@
 import { IMAGE_FILTERS } from "@/constants/image.contant";
-const heic2any = require("../scripts/heic2any.js");
+const heic2any = require("@/scripts/heic2any.js");
 
 declare var Marvin: any;
 

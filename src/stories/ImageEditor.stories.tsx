@@ -1,4 +1,4 @@
-import { ImageEditor } from "../components";
+import ImageEditor from "..";
 
 export default {
   title: "Image editor",

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-import baseStyles from "../global.module.scss";
+import baseStyles from "../../global.module.scss";
 
 interface FiltersProps {
   imageFile?: File | Blob;

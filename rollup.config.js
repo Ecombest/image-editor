@@ -10,16 +10,11 @@ const packageJson = require("./package.json");
 
 export default [
   {
-    input: "src/index.ts",
+    input: "src/index.tsx",
     output: [
       {
         file: packageJson.main,
         format: "cjs",
-        sourcemap: true,
-      },
-      {
-        file: packageJson.module,
-        format: "esm",
         sourcemap: true,
       },
     ],
@@ -34,7 +29,7 @@ export default [
     external: ["react", "react-dom"],
   },
   {
-    input: "dist/esm/index.d.ts",
+    input: "dist/index.d.ts",
     output: [{ file: "dist/index.d.ts", format: "esm" }],
     plugins: [dts()],
     external: [/\.(css|less|scss)$/],

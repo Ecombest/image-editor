@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.scss";
 import { drawImage } from "@/utils/canvas.util";
-import Properties from "./Properties";
-import Actions from "./Actions";
-import Filters from "./Filters";
-import Cropper from "./Cropper";
+import Properties from "./components/Properties";
+import Actions from "./components/Actions";
+import Filters from "./components/Filters";
+import Cropper from "./components/Cropper";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/solid";
-import UploadImage from "./Options/UploadImage";
+import UploadImage from "./components/Options/UploadImage";
 import {
   applyFilter,
   processImageFile,
@@ -93,13 +93,15 @@ export default function ImageEditor(props: ImageEditorProps) {
   let processingTimeOut: any = null;
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src =
+    // Marvin
+    const marvinScript = document.createElement("script");
+    marvinScript.src =
       "https://ecb-personalize-storage.sgp1.digitaloceanspaces.com/ecb-static/libs/bestbuildyou/marvinj-1.0.min.js";
-    script.async = true;
-    document.body.appendChild(script);
+    marvinScript.async = true;
+    document.body.appendChild(marvinScript);
+
     return () => {
-      document.body.removeChild(script);
+      document.body.removeChild(marvinScript);
     };
   }, []);
 
