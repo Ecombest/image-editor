@@ -18,7 +18,6 @@ import {
   CROPPER_MIN_HEIGHT,
   CROPPER_MIN_WIDTH,
 } from "@/constants/cropper.constant";
-import { distanceBetweenTwoPoints } from "@/utils/event.util";
 import { LoadImageFailedIcon, LoadingIcon } from "@/constants/icon.constant";
 import { ERROR_MESSAGES } from "@/constants/image.contant";
 

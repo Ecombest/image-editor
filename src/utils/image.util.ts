@@ -1,5 +1,5 @@
 import { IMAGE_FILTERS } from "@/constants/image.contant";
-import heic2any from "heic2any";
+const heic2any = require("../scripts/heic2any.js");
 
 declare var Marvin: any;
 
@@ -142,10 +142,10 @@ export const processImageFile = async (
         blob: imageFile,
         toType: "image/png",
       })
-        .then((blob) => {
+        .then((blob: Blob) => {
           resolve(blob);
         })
-        .catch((error) => {
+        .catch((error: any) => {
           reject(undefined);
         });
     });

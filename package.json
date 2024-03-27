@@ -59,9 +59,5 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts",
-  "dependencies": {
-    "heic2any": "^0.0.4",
-    "heroicons": "^2.0.18"
-  }
+  "types": "dist/index.d.ts"
 }
