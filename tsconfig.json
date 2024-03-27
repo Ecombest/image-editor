@@ -15,6 +15,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "moduleResolution": "node",
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "emitDeclarationOnly": true,
     "paths": {
