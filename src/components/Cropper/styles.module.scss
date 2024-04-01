@@ -1,8 +1,10 @@
-@import "../../global.module.scss";
+@import "../../index.module.scss";
+
+$cropperBorderWidth: 4px;
 
 .cropper {
   position: absolute;
-  box-shadow: 0 0 0 2px $primary-color;
+  box-shadow: 0 0 0 $cropperBorderWidth #fff0;
   top: -100px;
 
   .highlight-container {
@@ -25,7 +27,7 @@
     }
   }
 
-  .corners {
+  .resizers {
     width: 100%;
     height: 100%;
     overflow: visible;
@@ -37,35 +39,75 @@
     }
 
     :nth-child(1) {
-      top: -5px;
-      left: -5px;
-      border-top: 5px solid $tertiary-color;
-      border-left: 5px solid $tertiary-color;
+      top: -$cropperBorderWidth;
+      left: -$cropperBorderWidth;
+      border-top: $cropperBorderWidth solid #ffffff;
+      border-left: $cropperBorderWidth solid #ffffff;
       cursor: nwse-resize;
     }
 
     :nth-child(2) {
-      top: -5px;
-      right: -5px;
-      border-top: 5px solid $tertiary-color;
-      border-right: 5px solid $tertiary-color;
+      top: -$cropperBorderWidth;
+      right: -$cropperBorderWidth;
+      border-top: $cropperBorderWidth solid #ffffff;
+      border-right: $cropperBorderWidth solid #ffffff;
       cursor: nesw-resize;
     }
 
     :nth-child(3) {
-      bottom: -5px;
-      left: -5px;
-      border-bottom: 5px solid $tertiary-color;
-      border-left: 5px solid $tertiary-color;
-      cursor: nesw-resize;
+      bottom: -$cropperBorderWidth;
+      right: -$cropperBorderWidth;
+      border-bottom: $cropperBorderWidth solid #ffffff;
+      border-right: $cropperBorderWidth solid #ffffff;
+      cursor: nwse-resize;
     }
 
     :nth-child(4) {
-      bottom: -5px;
-      right: -5px;
-      border-bottom: 5px solid $tertiary-color;
-      border-right: 5px solid $tertiary-color;
-      cursor: nwse-resize;
+      bottom: -$cropperBorderWidth;
+      left: -$cropperBorderWidth;
+      border-bottom: $cropperBorderWidth solid #ffffff;
+      border-left: $cropperBorderWidth solid #ffffff;
+      cursor: nesw-resize;
+    }
+
+    .edge {
+      position: absolute;
+    }
+
+    :nth-child(5) {
+      width: calc(20px + $cropperBorderWidth);
+      height: $cropperBorderWidth;
+      top: -$cropperBorderWidth;
+      right: calc(50% - (20px + $cropperBorderWidth) / 2);
+      background-color: #ffffff;
+      cursor: ns-resize;
+    }
+
+    :nth-child(6) {
+      width: $cropperBorderWidth;
+      height: calc(20px + $cropperBorderWidth);
+      top: calc(50% - (20px + $cropperBorderWidth) / 2);
+      right: -$cropperBorderWidth;
+      background-color: #ffffff;
+      cursor: ew-resize;
+    }
+
+    :nth-child(7) {
+      width: calc(20px + $cropperBorderWidth);
+      height: $cropperBorderWidth;
+      bottom: -$cropperBorderWidth;
+      right: calc(50% - (20px + $cropperBorderWidth) / 2);
+      background-color: #ffffff;
+      cursor: ns-resize;
+    }
+
+    :nth-child(8) {
+      width: $cropperBorderWidth;
+      height: calc(20px + $cropperBorderWidth);
+      top: calc(50% - (20px + $cropperBorderWidth) / 2);
+      left: -$cropperBorderWidth;
+      background-color: #ffffff;
+      cursor: ew-resize;
     }
   }
 }

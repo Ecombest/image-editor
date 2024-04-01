@@ -89,3 +89,96 @@ export const LoadImageFailedIcon = URL.createObjectURL(
     { type: "image/svg+xml" }
   )
 );
+
+// export const UploadFileIcon = URL.createObjectURL(
+//   new Blob(
+//     [
+//       `<svg
+//         xmlns="http://www.w3.org/2000/svg"
+//         viewBox="0 0 24 24"
+//         fill="#ffffff"
+//         aria-hidden="true"
+//         data-slot="icon"
+//         width="50"
+//         height="50"
+//       >
+//         <path
+//           fill-rule="evenodd"
+//           d="M5.625 1.5H9a3.75 3.75 0 0 1 3.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 0 1 3.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 0 1-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875Zm6.905 9.97a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l1.72-1.72V18a.75.75 0 0 0 1.5 0v-4.19l1.72 1.72a.75.75 0 1 0 1.06-1.06l-3-3Z"
+//           clip-rule="evenodd"
+//         ></path>
+//         <path d="M14.25 5.25a5.23 5.23 0 0 0-1.279-3.434 9.768 9.768 0 0 1 6.963 6.963A5.23 5.23 0 0 0 16.5 7.5h-1.875a.375.375 0 0 1-.375-.375V5.25Z"></path>
+//       </svg>`,
+//     ],
+//     { type: "image/svg+xml" }
+//   )
+// );
+
+export const UploadFileIcon = (fill: string = "#ffffff") =>
+  URL.createObjectURL(
+    new Blob(
+      [
+        `<svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="${fill}"
+        aria-hidden="true"
+        data-slot="icon"
+        width="50"
+        height="50"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M5.625 1.5H9a3.75 3.75 0 0 1 3.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 0 1 3.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 0 1-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875Zm6.905 9.97a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l1.72-1.72V18a.75.75 0 0 0 1.5 0v-4.19l1.72 1.72a.75.75 0 1 0 1.06-1.06l-3-3Z"
+          clip-rule="evenodd"
+        ></path>
+        <path d="M14.25 5.25a5.23 5.23 0 0 0-1.279-3.434 9.768 9.768 0 0 1 6.963 6.963A5.23 5.23 0 0 0 16.5 7.5h-1.875a.375.375 0 0 1-.375-.375V5.25Z"></path>
+      </svg>`,
+      ],
+      { type: "image/svg+xml" }
+    )
+  );
+
+export const ZoomInIcon = URL.createObjectURL(
+  new Blob(
+    [
+      `<svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="#808080"
+        aria-hidden="true"
+        data-slot="icon"
+        class="kpYEgGQqWY7XNEC4N1nv"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Zm4.5 0a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>`,
+    ],
+    { type: "image/svg+xml" }
+  )
+);
+
+export const ZoomOutIcon = URL.createObjectURL(
+  new Blob(
+    [
+      `<svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="#808080"
+        aria-hidden="true"
+        data-slot="icon"
+        class="kpYEgGQqWY7XNEC4N1nv"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Zm8.25-3.75a.75.75 0 0 1 .75.75v2.25h2.25a.75.75 0 0 1 0 1.5h-2.25v2.25a.75.75 0 0 1-1.5 0v-2.25H7.5a.75.75 0 0 1 0-1.5h2.25V7.5a.75.75 0 0 1 .75-.75Z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>`,
+    ],
+    { type: "image/svg+xml" }
+  )
+);

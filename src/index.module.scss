@@ -1,11 +1,11 @@
 $primary-color: #377db5;
 $secondary-color: #509fdc;
 $tertiary-color: #cee8fb;
-$base-text-color: gray;
+$text-base-color: gray;
 
 :export {
   primaryColor: $primary-color;
   secondaryColor: $secondary-color;
   tertiaryColor: $tertiary-color;
-  baseTextColor: $base-text-color;
+  textBaseColor: $text-base-color;
 }

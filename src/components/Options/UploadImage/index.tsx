@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 import styles from "./styles.module.scss";
+import { UploadFileIcon } from "@/constants/icon.constant";
 
 interface UploadImageProps {
   imageFile?: File | Blob;
@@ -25,7 +25,7 @@ export default function UploadImage(props: UploadImageProps) {
 
   return (
     <div className={styles["uploader"]} onClick={onOpenUploader}>
-      <DocumentArrowUpIcon className={styles["icon"]} />
+      <img alt="" src={UploadFileIcon("#808080")} height={40} />
       <div ref={labelRef} className={styles["label"]}>
         {imageFile ? "Re-upload" : "Upload"}
       </div>

@@ -1,10 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./styles.module.scss";
 import {
-  MagnifyingGlassMinusIcon,
-  MagnifyingGlassPlusIcon,
-} from "@heroicons/react/24/solid";
-import {
   CROPPER_MIN_HEIGHT,
   CROPPER_MIN_WIDTH,
   dZoom,
@@ -13,7 +9,7 @@ import {
   getImageActualDimensions,
   updateCropperProperties,
 } from "@/utils/image.util";
-import { FlipIcon } from "@/constants/icon.constant";
+import { FlipIcon, ZoomInIcon, ZoomOutIcon } from "@/constants/icon.constant";
 
 interface PropertiesProps {
   image?: HTMLImageElement | undefined | null;
@@ -27,27 +23,6 @@ export default function Properties(props: PropertiesProps) {
   const { image, cropperProperties, imageProperties } = props;
   const zoomInRef = useRef<HTMLDivElement>(null);
   const zoomOutRef = useRef<HTMLDivElement>(null);
-
-  const onZoom = (dZoom: number) => {
-    const dw = dZoom;
-    const dh = dZoom / cropperProperties.ratio;
-    const { clientWidth = 0, clientHeight = 0 } = image ?? {};
-    const { actualWidth, actualHeight } = getImageActualDimensions(image);
-    updateCropperProperties(
-      cropperProperties,
-      -dZoom / 2,
-      -dZoom / cropperProperties.ratio / 2,
-      dw,
-      dh,
-      (clientWidth - actualWidth) / 2,
-      (clientHeight - actualHeight) / 2,
-      CROPPER_MIN_WIDTH,
-      CROPPER_MIN_HEIGHT,
-      actualWidth,
-      actualHeight
-    );
-    window.dispatchEvent(new CustomEvent("update-cropper"));
-  };
 
   const onFlipX = () => {
     if (!image) return;
@@ -71,6 +46,26 @@ export default function Properties(props: PropertiesProps) {
 
   // zoom events
   useEffect(() => {
+    const onZoom = (dZoom: number) => {
+      const dw = dZoom;
+      const dh = dZoom / cropperProperties.ratio;
+      const { clientWidth = 0, clientHeight = 0 } = image ?? {};
+      const { actualWidth, actualHeight } = getImageActualDimensions(image);
+      updateCropperProperties(
+        cropperProperties,
+        -dZoom / 2,
+        -dZoom / cropperProperties.ratio / 2,
+        dw,
+        dh,
+        (clientWidth - actualWidth) / 2,
+        (clientHeight - actualHeight) / 2,
+        CROPPER_MIN_WIDTH,
+        CROPPER_MIN_HEIGHT,
+        actualWidth,
+        actualHeight
+      );
+      window.dispatchEvent(new CustomEvent("update-cropper"));
+    };
     const onZoomIn = (event: MouseEvent | TouchEvent) => {
       event.preventDefault();
       clearInterval(zoomInterval);
@@ -129,21 +124,22 @@ export default function Properties(props: PropertiesProps) {
         zoomInButton.removeEventListener("touchend", onZoomEnd);
       }
     };
-  }, [image]);
+  }, [image, cropperProperties]);
 
   return (
     <div className={styles["properties"]}>
       <div className={styles["button"]} ref={zoomInRef}>
-        <MagnifyingGlassPlusIcon className={styles["icon"]} />
+        <img alt="" src={ZoomOutIcon} className={styles["icon"]} />
       </div>
       <div className={styles["button"]} ref={zoomOutRef}>
-        <MagnifyingGlassMinusIcon className={styles["icon"]} />
+        <img alt="" src={ZoomInIcon} className={styles["icon"]} />
       </div>
       <div className={styles["button"]} onClick={onFlipX}>
-        <img src={FlipIcon} className={styles["icon"]} />
+        <img alt="" src={FlipIcon} className={styles["icon"]} />
       </div>
       <div className={styles["button"]} onClick={onFlipY}>
         <img
+          alt=""
           src={FlipIcon}
           className={`${styles["icon"]} ${styles["flipY"]}`}
         />

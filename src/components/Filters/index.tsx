@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
-import baseStyles from "../../global.module.scss";
+import basicStyles from "../../index.module.scss";
 
 interface FiltersProps {
   imageFile?: File | Blob;
@@ -55,11 +55,11 @@ export default function Filters(props: FiltersProps) {
               style={{
                 boxShadow:
                   currentFilter == filter.filter
-                    ? `0 0 0 2px ${baseStyles.primaryColor}`
+                    ? `0 0 0 2px ${basicStyles.primaryColor}`
                     : "none",
               }}
             >
-              <img src={imageSrc} style={{ filter: filter.filter }} />
+              <img alt="" src={imageSrc} style={{ filter: filter.filter }} />
             </div>
 
             <div className={styles["label"]}>{filter.label}</div>
