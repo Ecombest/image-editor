@@ -1,6 +1,6 @@
 {
   "name": "buildyou-image-editor",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "main": "dist/index.js",
   "dependencies": {
     "react": "^18.2.0",

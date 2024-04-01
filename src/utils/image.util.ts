@@ -41,15 +41,14 @@ export const updateCropperProperties = (
   maxWidth: number = 0,
   maxHeight: number = 0
 ) => {
-  const nextW = cropperProperties.width + dw;
-  const nextH = cropperProperties.height + dh;
-  if (
-    nextW < minWidth ||
-    nextW > maxWidth ||
-    nextH < minHeight ||
-    nextH > maxHeight
-  )
-    return;
+  let nextW = cropperProperties.width + dw;
+  let nextH = cropperProperties.height + dh;
+
+  if (nextW < minWidth) nextW = minWidth;
+  if (nextW > maxWidth) nextW = maxWidth;
+  if (nextH < minHeight) nextH = minHeight;
+  if (nextH > maxHeight) nextH = maxHeight;
+
   const nextX = cropperProperties.x + dx;
   const nextY = cropperProperties.y + dy;
   if (nextX >= minX) {
